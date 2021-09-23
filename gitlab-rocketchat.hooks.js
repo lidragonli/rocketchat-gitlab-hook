@@ -401,28 +401,13 @@ See: ${data.object_attributes.url}`,
 		if (data.status === 'success') {
 			deploy_status = 'succeeded';
 		}
-		// branch removal
-		if (data.status === 'running') {
+		if (data.status != 'running') {
 			return {
 				content: {
 					username: `${data.user.name}`,
 					icon_url: USE_ROCKETCHAT_AVATAR ? null : avatar,
-					text: `Starting deploy to ${data.environment} by ${data.user.name} with job #[${data.deployable_id}](${data.deployable_url}), [Commit](${data.commit_url}): ${data.commit_title} `
-					//attachments: [
-					//	makeAttachment(user, `Starting deploy to ${data.environment} with #[${data.deployable_id}](${data.deployable_url}), ${data.commit_title}`,null, STATUSES_COLORS[data.status])
-					//]
-				}
-			};
-		}
-		else {
-			return {
-				content: {
-					username: `${data.user.name}`,
-					icon_url: USE_ROCKETCHAT_AVATAR ? null : avatar,
-					text: `Deploy to ${data.environment} by ${data.user.name} ${deploy_status} at ${data.status_changed_at}, #[${data.deployable_id}](${data.deployable_url})`
-					//attachments: [
-					//	makeAttachment(user, `Deploy to ${data.environment} ${deploy_status} at ${data.status_changed_at}, #[${data.deployable_id}](${data.deployable_url})`,null, STATUSES_COLORS[data.status])
-					//]
+					text: `Deploy to [${data.environment}] by ${data.user.name} ${deploy_status} at ${data.status_changed_at}. [Job:#${data.deployable_id}](${data.deployable_url}). 
+					\n [Commit:](${data.commit_url}) ${data.commit_title}`
 				}
 			};
 		}
