@@ -391,28 +391,6 @@ See: ${data.object_attributes.url}`,
 		};
 	}
 
-	deploymentEvent(data) {
-		//const user = {
-		//	name: data.user.name,
-		//	avatar_url: data.user.avatar_url
-		//};
-		const avatar = data.user.avatar_url || DEFAULT_AVATAR;
-		let deploy_status = data.status;
-		if (data.status === 'success') {
-			deploy_status = 'succeeded';
-		}
-		if (data.status != 'running') {
-			return {
-				content: {
-					username: `${data.user.name}`,
-					icon_url: USE_ROCKETCHAT_AVATAR ? null : avatar,
-					text: `Deploy to [${data.environment}] by ${data.user.name} ${deploy_status} at ${data.status_changed_at}. [Job:#${data.deployable_id}](${data.deployable_url}). 
-					\n [Commit:](${data.commit_url}) ${data.commit_title}`
-				}
-			};
-		}
-	}
-
 	systemEvent(data) {
 		const event_name = data.event_name;
 		const [, eventType] = data.event_name.split('_');
@@ -470,5 +448,23 @@ See: ${data.object_attributes.url}`,
 				]
 			}
 		};
+	}
+
+	deploymentEvent(data) {
+		const avatar = data.user.avatar_url || DEFAULT_AVATAR;
+		let deploy_status = data.status;
+		if (data.status === 'success') {
+			deploy_status = 'succeeded';
+		}
+		if (data.status != 'running') {
+			return {
+				content: {
+					username: `${data.user.name}`,
+					icon_url: USE_ROCKETCHAT_AVATAR ? null : avatar,
+					text: `Deploy to [${data.environment}] by ${data.user.name} ${deploy_status} at ${data.status_changed_at}. [Job:#${data.deployable_id}](${data.deployable_url}). 
+					\n[Commit:](${data.commit_url}) ${data.commit_title}`
+				}
+			};
+		}
 	}
 }
