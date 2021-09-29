@@ -19,11 +19,7 @@ class Script {
                 context: 'http://schema.org/extensions',
                 type: 'MessageCard',
                 themeColor: STATUSES_COLORS[stringArray[6]],
-                //text: request.data.text,
-                sections: [{
-                    "activityTitle": request.data.text,
-                    "markdown": true
-                }],
+                text: request.data.text
             },
         };
     }
