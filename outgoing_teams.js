@@ -1,6 +1,16 @@
+const STATUSES_COLORS = {
+    succeeded: '#2faa60',
+    pending: '#e75e40',
+    failed: '#d22852',
+    canceled: '#5c5c5c',
+    created: '#ffc107',
+    running: '#607d8b',
+};
+
 class Script {
     prepare_outgoing_request({ request }) {
-        console.log(request.data);
+        //console.log(request.data);
+        let stringArray= request.data.text.split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         return {
             url: request.url,
             method: 'POST',
@@ -8,27 +18,15 @@ class Script {
             data: {
                 context: 'http://schema.org/extensions',
                 type: 'MessageCard',
-                themeColor: "0076D7",
-                summary: 'Larry Bryant created a new task',
-                text: request.data.user_name.bold() + ": " + request.data.text,
+                themeColor: STATUSES_COLORS[stringArray[6]],
+                //text: request.data.text,
                 sections: [{
-                    "activityTitle": "Larry Bryant created a new task",
-                    "activitySubtitle": "On Project Tango",
-                    "activityImage": "https://teamsnodesample.azurewebsites.net/static/img/image5.png",
-                    "facts": [{
-                        "name": "Assigned to",
-                        "value": "Unassigned"
-                    }, {
-                        "name": "Due date",
-                        "value": "Mon May 01 2017 17:07:18 GMT-0700 (Pacific Daylight Time)"
-                    }, {
-                        "name": "Status",
-                        "value": "Not started"
-                    }],
+                    "activityTitle": request.data.text,
                     "markdown": true
                 }],
-                //text: encodeURIComponent( request.data.user_name.bold() + request.data.text)
             },
         };
     }
 }
+
+//["Deploy", "to", "[devops]", "by", "Li", "Ding", "succeeded", "at", "2021-09-29", "19:24:22", "+0000.", "Job:#1161968.", "Commit:", "Update", "devops.yaml"]
