@@ -10,7 +10,7 @@ const STATUSES_COLORS = {
 class Script {
     prepare_outgoing_request({ request }) {
         //console.log(request.data);
-        let stringArray= request.data.text.split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+        let stringArray= request.data.text.split(/(§+)/).filter( function(e) { return e.trim().length > 1; } );
         return {
             url: request.url,
             method: 'POST',
@@ -18,7 +18,7 @@ class Script {
             data: {
                 context: 'http://schema.org/extensions',
                 type: 'MessageCard',
-                themeColor: STATUSES_COLORS[stringArray[6]],
+                themeColor: STATUSES_COLORS[stringArray[1]],
                 text: request.data.text
             },
         };

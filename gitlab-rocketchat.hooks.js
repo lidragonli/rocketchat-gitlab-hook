@@ -461,7 +461,7 @@ See: ${data.object_attributes.url}`,
 				content: {
 					username: `${data.user.name}`,
 					icon_url: USE_ROCKETCHAT_AVATAR ? null : avatar,
-					text: `Deploy to [${data.environment}] by ${data.user.name} ${deploy_status} at ${data.status_changed_at}. [Job:#${data.deployable_id}](${data.deployable_url}). 
+					text: `Deploy to [${data.environment}] by ${data.user.name} §${deploy_status}§ at ${data.status_changed_at}. [Job:#${data.deployable_id}](${data.deployable_url}). 
 					\n[Commit:](${data.commit_url}) ${data.commit_title}`
 				}
 			};
